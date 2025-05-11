@@ -16,7 +16,7 @@ const PYTHON_API = process.env.PYTHON_API || 'http://localhost:8000';
 
 const handleChat = async (req, res) => {
    const { prompt, sessionId } = req.body;
-
+   
   if (!prompt || !sessionId) {
     return res.status(400).json({ error: 'Prompt and sessionId are required' });
   }
