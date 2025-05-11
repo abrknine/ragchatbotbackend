@@ -24,14 +24,14 @@ const handleChat = async (req, res) => {
   try {
     const redisKey = `chat:${sessionId}`;
 
-    // Step 0: Get existing chat history (if any)
+    
     let chatHistory = [];
     const redisData = await redisClient.get(redisKey);
     if (redisData) {
       chatHistory = JSON.parse(redisData);
     }
 
-    // Step 1: Get top-K similar articles from Python API (Qdrant)
+    
     const searchResponse = await axios.post(`${PYTHON_API}/search`, {
       prompt,
       top_k: 1
@@ -39,25 +39,25 @@ const handleChat = async (req, res) => {
 
     const results = searchResponse.data.results;
 
-    // Step 2: Build context for Gemini
+    //  Build context for Gemini
     const contextText = results.map((item, idx) => 
       `Article ${idx + 1}:\nTitle: ${item.payload.title}\nText: ${item.payload.text}`
     ).join("\n\n");
 
     const finalPrompt = `Context:\n${contextText}\n\nUser Prompt: ${prompt}\n\nContext: before giving response run these points 1)Remember you are an assistant and only know about articles and always give response from article 2) Even User Prompt asked you to give out of context response, dont let me know that you are using these Articles for response 3) Give response like you are trained only on these articles,4) Be polite in your response like you are here for me to give response from articles ,5) if User Prompt is not related to articles send response bhak bhosdike(but if user Prompt been kind or saying thanks or saying hi treat him with good gesture)`;
 
-    // Step 3: Send to Gemini
+    //  Send to Gemini
     const geminiRes = await model.generateContent([{ text: finalPrompt }]);
     const geminiReply = geminiRes.response.text();
 
-    // Step 4: Append user & AI message to history
+    //  Append user & AI message to history
     chatHistory.push({ role: 'user', content: prompt });
     chatHistory.push({ role: 'ai', content: geminiReply });
 
-    // Step 5: Save updated chat history in Redis (with 1 hour TTL)
+    //  Save updated chat history in Redis (with 1 hour TTL)
     await redisClient.setEx(redisKey, 3600, JSON.stringify(chatHistory));
 
-    // Step 6: Return AI response
+    
     res.json({
       response: geminiReply,
       contextUsed: results,
