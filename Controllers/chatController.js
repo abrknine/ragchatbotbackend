@@ -34,7 +34,7 @@ const handleChat = async (req, res) => {
     
     const searchResponse = await axios.post(`${PYTHON_API}/search`, {
       prompt,
-      top_k: 1
+      top_k: 2
     });
 
     const results = searchResponse.data.results;
