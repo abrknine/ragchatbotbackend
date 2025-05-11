@@ -37,19 +37,12 @@
  app.use(express.json());
 
 
- const allowedOrigins = [
-  "http://localhost:5173",         // dev
-   // production frontend
-];
+
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    return callback(new Error("Not allowed by CORS"));
-  },
-  credentials: true
+  origin: 'http://localhost:5173',  // Replace with your frontend URL
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 
