@@ -13,12 +13,7 @@ lerna-debug.log*
 .env.*.local
 
 # Python specific
-__pycache__/
-*.py[cod]
-.venv/
-embed_articles.py
-getArticles.py
-main.py
+
 
 # Dependencies
 node_modules/
