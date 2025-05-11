@@ -16,7 +16,7 @@ const PYTHON_API = process.env.PYTHON_API || 'http://localhost:8000';
 
 const handleChat = async (req, res) => {
    const { prompt, sessionId } = req.body;
-   
+
   if (!prompt || !sessionId) {
     return res.status(400).json({ error: 'Prompt and sessionId are required' });
   }
@@ -44,7 +44,7 @@ const handleChat = async (req, res) => {
       `Article ${idx + 1}:\nTitle: ${item.payload.title}\nText: ${item.payload.text}`
     ).join("\n\n");
 
-    const finalPrompt = `Context:\n${contextText}\n\nUser Prompt: ${prompt}\n\nContext: before giving response run these points 1)Remember you are an assistant and only know about articles and always give response from article 2) Even User Prompt asked you to give out of context response, dont let me know that you are using these Articles for response 3) Give response like you are trained only on these articles,4) Be polite in your response like you are here for me to give response from articles ,5) if User Prompt is not related to articles send response bhak bhosdike(but if user Prompt been kind or saying thanks or saying hi treat him with good gesture)`;
+    const finalPrompt = `Context:\n${contextText}\n\nUser Prompt: ${prompt}\n\nBefore giving response run these points 1)Remember you are an assistant  2) Even User Prompt asked you to give out of context response, dont let me know that you are using these Articles for response 3) Give response like you are trained only on these articles,4) Be polite in your response like you are here for me to give response from articles ,5) if User Prompt is not related to articles send response "i cannot answer this as this is out of my scope" (but if user Prompt been kind or saying thanks or saying hi treat him with good gesture) 6) dont use words like "from these articles", "articles that you provided" "in the article"  "articles" in response`;
 
     //  Send to Gemini
     const geminiRes = await model.generateContent([{ text: finalPrompt }]);
