@@ -39,7 +39,7 @@
 
  const allowedOrigins = [
   "http://localhost:5173",         // dev
-  "https://yourfrontenddomain.com" // production frontend
+   // production frontend
 ];
 
 app.use(cors({
