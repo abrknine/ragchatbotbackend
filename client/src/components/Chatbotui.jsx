@@ -59,7 +59,7 @@ export default function ChatbotUI() {
     
     try {
       // Call an API endpoint dedicated to retrieving chat history
-      const response = await fetch(`http://localhost:5000/api/chat/history/${sessionId}`, {
+      const response = await fetch(`https://ragchatbotbackend.onrender.com/api/chat/history/${sessionId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ export default function ChatbotUI() {
     
     try {
       // Call your backend API with prompt and sessionId
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch('https://ragchatbotbackend.onrender.com/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ export default function ChatbotUI() {
     
     try {
       // Call the clear session API endpoint
-      const response = await fetch('http://localhost:5000/api/chat/clear-session', {
+      const response = await fetch('https://ragchatbotbackend.onrender.com/api/chat/clear-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
