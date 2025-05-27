@@ -40,7 +40,7 @@ const openaiEmbedRoutes = require('./routes/openaiEmbed');
 
 
 app.use(cors({
-  origin:[ 'http://localhost:3000','https://ragchatbotbackend.vercel.app'],  // Replace with your frontend URL
+  origin:[ 'http://localhost:3000','https://www.pixelai.dev'],  // Replace with your frontend URL
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
