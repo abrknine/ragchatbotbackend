@@ -34,10 +34,6 @@ urls = [
     "https://www.bbc.com/news/topics/c008ql15vpyt",
     "https://www.bbc.com/news/articles/cgjlxxd5vvjo",
     "https://www.bbc.com/news/world-south-asia-11693674",
-
-
-
-
     # Add more URLs here
 ]
 

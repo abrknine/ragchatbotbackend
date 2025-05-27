@@ -14,7 +14,7 @@ model = SentenceTransformer("all-MiniLM-L6-v2")  # Fast and lightweight
 qdrant = QdrantClient(
     url="https://bb9fbc81-0ff2-48dd-a79e-05363cb09f2d.us-west-1-0.aws.cloud.qdrant.io",
     api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.tIUqiAefdWs7Ok1KnQBZNKYKQnOMOUIAZ3LsPU3_xH4"
-)
+) 
 
 collection_name = "history-articles"
 embedding_dim = 384

@@ -4,7 +4,7 @@
  const cors = require('cors');
  const { redisClient, connectRedis } = require("./Redis/RedisClient");
  const routes = require('./routes/ChatRoute');
-
+const openaiEmbedRoutes = require('./routes/openaiEmbed');
 
 
  const app = express();
@@ -30,7 +30,7 @@
    await redisClient.set('bar', 'foo');// Connect Redis ONE TIME at app start
     const value = await redisClient.get('bar');
     console.log(value);
- })();
+ })(); 
 
  // Middleware
  
@@ -40,7 +40,7 @@
 
 
 app.use(cors({
-  origin:[ 'http://localhost:5173','https://ragchatbotbackend.vercel.app'],  // Replace with your frontend URL
+  origin:[ 'http://localhost:3000','https://ragchatbotbackend.vercel.app'],  // Replace with your frontend URL
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
@@ -52,6 +52,7 @@ app.use(cors({
  
  
  app.use('/api/chat',  routes);
+ app.use('/api/openai', openaiEmbedRoutes);
 
 
  app.get('/api', (req, res) => {

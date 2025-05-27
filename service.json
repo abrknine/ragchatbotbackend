@@ -1,0 +1,261 @@
+[
+  {
+    "title": "AI Solutions",
+    "description": "Custom AI integrations tailored to your business needs. We design, develop and deploy intelligent solutions that automate processes and deliver insights.",
+    "features": [
+      "Conversational AI Chatbots",
+      "Natural Language Processing",
+      "Machine Learning Integration",
+      "Predictive Analytics"
+    ]
+  },
+  {
+    "title": "UI/UX Excellence",
+    "description": "Exceptional user interfaces that blend aesthetics with functionality. We create intuitive, responsive, and visually stunning digital experiences.",
+    "features": [
+      "Responsive Web Design",
+      "App Interface Design",
+      "User Experience Optimization",
+      "Interactive Prototyping"
+    ]
+  },
+  {
+    "title": "Product Development",
+    "description": "Turn your vision into reality. We provide development expertise and strategic partnership for equity-based collaboration on innovative product ideas.",
+    "features": [
+      "Full-Stack Development",
+      "MVP Creation",
+      "Equity Partnership",
+      "Scaling Support"
+    ]
+  },
+  {
+    "title": "PixelAI at a Glance",
+    "description": "A passionate team of developers, designers, and AI engineers delivering high-impact digital solutions for startups and businesses worldwide.",
+    "features": [
+      "Worked on AptChecker.com, SafeYourWeb, and other live projects",
+      "Expertise in Next.js, React, Tailwind CSS, Python, Express.js",
+      "Scalable architecture & clean codebase",
+      "Long-term tech partnerships & collaborations"
+    ]
+  },
+  {
+    "title": "Real-World Projects",
+    "description": "PixelAI has engineered and deployed real-world platforms impacting industries like cybersecurity, finance, and domain management.",
+    "features": [
+      "AptChecker – domain tools and DNS security",
+      "SafeYourWeb – website security landing with Framer Motion",
+      "Taqari – stealth project under development",
+      "Predictive Maintenance – AI-driven IoT analytics"
+    ]
+  },
+  {
+    "title": "What Can You Ask Us?",
+    "description": "Users often ask about pricing, project timelines, tech stacks, ongoing maintenance, chatbot solutions, and AI use cases. We're here to guide you through it.",
+    "features": [
+      "Can you build me a domain checker like AptChecker?",
+      "Do you offer chatbot integration for healthcare or e-commerce?",
+      "How does AI predictive analytics help industrial clients?",
+      "What technologies do you use for product development?"
+    ]
+  },
+  {
+    "title": "Chatbot Questions Users Commonly Ask",
+    "description": "Our chatbot can help answer a wide range of queries about PixelAI’s services, processes, and expertise.",
+    "features": [
+      "What kind of AI services do you offer?",
+      "Can I integrate a chatbot on my website?",
+      "Do you build MVPs for startups?",
+      "Have you worked with financial data before?",
+      "What frontend technologies do you use?",
+      "Can you help scale a product after launch?",
+      "Do you provide UI/UX services only?",
+      "What is the timeline to build a full-stack product?",
+      "What’s the cost of chatbot development?",
+      "Can I partner with you on equity basis?",
+      "Can I see samples of your past work?",
+      "How do you ensure data privacy in AI solutions?",
+      "Can you customize dashboards for analytics?"
+    ]
+  },
+  {
+    "title": "Our Process Lifecycle",
+    "description": "We follow a structured lifecycle to ensure successful outcomes — from discovery to iteration and improvement.",
+    "features": [
+      "Discovery: understanding users & market",
+      "Design: flows, interfaces, prototypes",
+      "AI Integration: ML & predictive features",
+      "Development & Testing: scalable systems",
+      "Analytics & Iteration: improve with insights"
+    ]
+  },
+  {
+    "title": "Chatbot Integration Services",
+    "description": "We build AI-powered chatbots tailored to your industry — enhancing support, engagement, and automation.",
+    "features": [
+      "Google Gemini & OpenAI integrations",
+      "Custom intent-based workflows",
+      "FAQ & long-form response handling",
+      "RAG pipelines with vector search"
+    ]
+  },
+  {
+    "title": "Tech Stack & Tools",
+    "description": "We use modern and scalable tech tools to ensure performance, speed, and extensibility.",
+    "features": [
+      "Frontend: React, Next.js, Tailwind CSS",
+      "Backend: Node.js, Express, FastAPI",
+      "Databases: PostgreSQL, Redis, MongoDB",
+      "AI: OpenAI, Google Gemini, Qdrant, Langchain",
+      "Tools: GitHub, Vercel, Railway, Docker"
+    ]
+  },
+  {
+    "title": "Pricing & Engagement Models",
+    "description": "We offer flexible pricing tailored to your needs — from fixed quotes to long-term partnership models.",
+    "features": [
+      "Fixed-price for small/medium scopes",
+      "Monthly retainer for long-term maintenance",
+      "Equity + tech partnership options",
+      "Pay-per-feature for MVP builds"
+    ]
+  },
+  {
+    "title": "Support & Maintenance",
+    "description": "PixelAI ensures post-launch support, performance tuning, and continuous updates based on user feedback.",
+    "features": [
+      "Bug fixes and enhancements",
+      "Performance optimization",
+      "Real-time monitoring setup",
+      "Tech advisory & roadmap planning"
+    ]
+  },
+  {
+    "title": "Why 'One PixelAI at a Time'?",
+    "description": "Our philosophy is rooted in attention to detail — delivering top-tier digital solutions phase by phase, with industry-standard quality.",
+    "features": [
+      "Pixel-perfect UI and scalable code",
+      "Break down projects into measurable phases",
+      "Each sprint adds tangible value",
+      "Zero shortcuts, high maintainability"
+    ]
+  },
+  {
+    "title": "Phased Delivery Approach",
+    "description": "We don’t dump everything at once. We plan, prioritize, and deliver features in logical phases to maximize quality and adaptability.",
+    "features": [
+      "Phase 1: Core functionality",
+      "Phase 2: UX polish & edge cases",
+      "Phase 3: Analytics & improvements",
+      "Transparent milestone tracking"
+    ]
+  },
+  {
+    "title": "Design to Deployment",
+    "description": "From the first wireframe to a live production build — we own the full lifecycle of your product idea.",
+    "features": [
+      "Wireframes & mockups",
+      "Responsive layout implementation",
+      "APIs & backend logic",
+      "Deploy on Vercel, Railway, or custom"
+    ]
+  },
+  {
+    "title": "What’s Your Development Speed?",
+    "description": "We move fast — without compromising quality. An MVP can be shipped within 2-4 weeks depending on the scope.",
+    "features": [
+      "MVP in 2-4 weeks",
+      "Full product in 1-2 months (avg)",
+      "Daily/weekly progress updates",
+      "Realistic timelines & no false promises"
+    ]
+  },
+  {
+    "title": "Can I Request Revisions?",
+    "description": "Absolutely! We value collaboration and incorporate your feedback across each stage of the project.",
+    "features": [
+      "Design review calls",
+      "Revisions tracked via shared docs",
+      "Feedback loops in each sprint",
+      "Clear approval checkpoints"
+    ]
+  },
+  {
+    "title": "Collaboration Models",
+    "description": "Whether you're a founder, PM, or agency — we adapt to your workflow to make collaboration seamless.",
+    "features": [
+      "Slack/Notion-based team syncs",
+      "GitHub/PR-driven development",
+      "Founder-led feedback loops",
+      "Agile or milestone-based models"
+    ]
+  },
+  {
+    "title": "Do You Help After Delivery?",
+    "description": "We don’t ghost after handover. We stay with you post-launch to fix, improve, and guide.",
+    "features": [
+      "Post-deployment support (1-3 months)",
+      "Bug fixes & minor updates included",
+      "Long-term retainers available",
+      "Tech consulting on scale/improvements"
+    ]
+  },
+  {
+    "title": "Performance & Optimization",
+    "description": "We obsess over speed and smoothness. Every product we build is optimized for performance from day one.",
+    "features": [
+      "Lighthouse score >90",
+      "Lazy loading & CDN usage",
+      "Backend query optimization",
+      "Optimized builds for web/mobile"
+    ]
+  },
+  {
+    "title": "Security & Best Practices",
+    "description": "We build with clean, secure code using best practices for both frontend and backend systems.",
+    "features": [
+      "Form validation & sanitization",
+      "Token-based API authentication",
+      "Data encryption at rest/transit",
+      "Modern linting, typing, and testing"
+    ]
+  },
+  {
+    "title": "How Do You Start a Project?",
+    "description": "Kickstarting a project with PixelAI is simple — we guide you through onboarding, scoping, and kickoff smoothly.",
+    "features": [
+      "Discovery call & goal mapping",
+      "Proposal with timelines & cost",
+      "Design-first or build-fast path",
+      "Dev starts within 48 hours of alignment"
+    ]
+  },{
+    "title": "What your Website do?/what you can do",
+    "description": "PixelAI is a team of skilled developers, designers, and AI engineers that builds smart, scalable digital products. They've created real-world solutions in industries like cybersecurity, finance, and domain management — including platforms like AptChecker (a DNS/domain tool), SafeYourWeb (a website security landing), and predictive maintenance tools for IoT analytics. They specialize in AI-driven services, chatbot integration, and full-cycle product development, and they're always open to discussing pricing, timelines, tech stacks, and use cases for your business.",
+    "features": [
+      " AI-Driven Solutions Across Domains",
+      "Custom Chatbot Integration",
+      "Real-World Product Showcase",
+      " Transparent Consultation Experience"
+    ]
+  },{
+    "title": "What makes you differnt",
+    "description": "As the name suggests, PixelAI blends the best of two worlds: Pixel-perfect UI design and cutting-edge AI solutions. We specialize in crafting visually stunning, highly usable interfaces tailored specifically to your business needs—while also delivering smart, AI-powered capabilities like chatbots, predictive analytics, and AI consulting. Whether you're building a product from scratch or scaling your business with intelligent tools, PixelAI ensures both beauty and brains in every solution",
+    "features": [
+      " Pixel-Perfect Custom UI ",
+      "Custom Chatbot Integration",
+      "AI-Powered Business Tools",
+      " Industry-Focused Consulting"
+    ]
+  },
+  {
+    "title": "What this chatbot does/do",
+    "description": "PixelAI is a team of skilled developers, designers, and AI engineers that builds smart, scalable digital products. They've created real-world solutions in industries like cybersecurity, finance, and domain management — including platforms like AptChecker (a DNS/domain tool), SafeYourWeb (a website security landing), and predictive maintenance tools for IoT analytics. They specialize in AI-driven services, chatbot integration, and full-cycle product development, and they're always open to discussing pricing, timelines, tech stacks, and use cases for your business.",
+    "features": [
+      " AI-Driven Solutions Across Domains",
+      "Custom Chatbot Integration",
+      "Real-World Product Showcase",
+      " Transparent Consultation Experience"
+    ]
+  }
+]

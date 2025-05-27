@@ -32,7 +32,7 @@ async def search_text(req: QueryRequest):
     hits = qdrant.search(
         collection_name=collection_name,
         query_vector=vector,
-        limit=req.top_k
+        limit=req.top_k  
     )
     return {
         "results": [
