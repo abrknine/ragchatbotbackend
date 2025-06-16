@@ -83,6 +83,40 @@ export default function ChatbotUI() {
     setIsOpen(!isOpen);
   };
 
+  // 🔥 Warm up backend server when sessionId becomes available
+useEffect(() => {
+  console.log('Warmup effect triggered with sessionId:', sessionId);
+  if (sessionId) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+    fetch('https://ragchatbotbackend.onrender.com/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt: 'hi',
+        sessionId: sessionId,
+      }),
+      signal: controller.signal,
+    })
+      .then((response) => {
+        console.log('Warmup request status:', response.status);
+        clearTimeout(timeoutId);
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Warmup request response:', data);
+      })
+      .catch((err) => {
+        console.error('Warmup request failed:', err.message);
+      });
+  }
+}, [sessionId]);
+
+
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };

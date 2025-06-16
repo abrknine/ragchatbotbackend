@@ -3,11 +3,14 @@ const router = express.Router();
 const { 
   handleChat, 
   getHistory, 
-  clearSession 
+  clearSession ,
+  checkHealth
 } = require('../Controllers/chatController');
 
 router.post('/', handleChat);
 router.get('/history/:sessionId', getHistory);
 router.post('/clear-session', clearSession);
+router.get('/health', checkHealth);
+
 
 module.exports = router;

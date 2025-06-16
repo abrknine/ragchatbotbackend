@@ -242,4 +242,10 @@ const clearSession = async (req, res) => {
 
 };
 
-module.exports = { handleChat, getHistory, clearSession };
+const checkHealth = (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+};
+module.exports = { handleChat, getHistory, clearSession, checkHealth };
+
+
+module.exports = { handleChat, getHistory, clearSession,checkHealth };
