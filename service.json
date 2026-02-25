@@ -257,5 +257,111 @@
       "Real-World Product Showcase",
       " Transparent Consultation Experience"
     ]
+  },
+  {
+    "title": "Taqari – AI Mock Interview Platform",
+    "description": "Taqari is an AI-powered mock interview platform built by PixelAI. It helps users practice real-time video interviews with AI interviewers, get detailed performance reports, and prepare for tech and non-tech roles. The platform provides 24/7 practice, personalized learning, and industry-specific questions.",
+    "features": [
+      "Real-time AI video interviews with instant feedback",
+      "Detailed performance reports and scoring",
+      "Industry-specific and role-based interview questions",
+      "Pricing plans: Basic Monthly, Annual Pro, Unlimited Premium",
+      "Visit: https://www.taqari.com"
+    ]
+  },
+  {
+    "title": "Taqari Features & FAQ",
+    "description": "Taqari offers AI-powered mock interviews with advanced algorithms for body language and communication analysis. It adapts questions to your skill level and includes a DSA compiler for coding interview practice.",
+    "features": [
+      "AI-powered analysis of body language and communication skills",
+      "Adaptive questions based on skill level and industry",
+      "24/7 availability — no scheduling conflicts",
+      "Proven results — thousands of successful candidates",
+      "Free plan available to get started",
+      "Built-in DSA compiler for coding practice",
+      "Visit: https://www.taqari.com"
+    ]
+  },
+  {
+    "title": "Nayi Umeed – Emotional Support & Counseling Platform",
+    "description": "Nayi Umeed (नयी उम्मीद) is an emotional wellness platform built by PixelAI. It provides professional counseling, legal assistance, astrology guidance, and survivor support stories. The platform serves users across India with 24/7 availability in English and Hindi.",
+    "features": [
+      "Professional emotional support and counseling services",
+      "Legal help and guidance for domestic violence survivors",
+      "Astrology and spiritual guidance sessions",
+      "Razorpay payment integration for service bookings",
+      "Multi-language support: English & Hindi",
+      "Visit: https://nayiumeed.com"
+    ]
+  },
+  {
+    "title": "SafeYourWeb – Website Security Platform",
+    "description": "SafeYourWeb is a cybersecurity landing platform developed by PixelAI. It offers professional website security services, backend protection solutions, and real-time threat monitoring. Built with React and Framer Motion for smooth interactive experiences.",
+    "features": [
+      "Website vulnerability scanning and protection",
+      "Backend security and hacking prevention",
+      "Real-time threat monitoring capabilities",
+      "Performance-optimized landing page with Framer Motion",
+      "Visit: https://safeyourweb.vercel.app"
+    ]
+  },
+  {
+    "title": "Code Achievers – Internship & Career Platform",
+    "description": "Code Achievers is a client project developed by PixelAI that provides internships and career guidance to early-stage students. It helps students gain industry exposure through structured programs, with Cashfree payment gateway integration for course payments.",
+    "features": [
+      "Internship programs for students starting their careers",
+      "Tech courses and structured learning programs",
+      "Cashfree payment gateway integration",
+      "Career guidance and industry exposure",
+      "Visit: https://codeachievers.com"
+    ]
+  },
+  {
+    "title": "PixelAI Project Links & Portfolio",
+    "description": "Here are the live links to all PixelAI projects and platforms. Users can visit these to explore our work and see real-world examples of our development capabilities.",
+    "features": [
+      "PixelAI Website: https://www.pixelai.dev",
+      "PixelAI Services: https://www.pixelai.dev/#services",
+      "PixelAI Portfolio: https://www.pixelai.dev/portfolio",
+      "Taqari (AI Interviews): https://www.taqari.com",
+      "Nayi Umeed (Counseling): https://nayiumeed.com",
+      "SafeYourWeb (Security): https://safeyourweb.vercel.app",
+      "Code Achievers (Internships): https://codeachievers.com"
+    ]
+  },
+  {
+    "title": "Project-Specific Questions Users Ask",
+    "description": "Users commonly ask detailed questions about specific PixelAI projects. Here are the types of questions and the relevant projects to reference.",
+    "features": [
+      "Tell me about Taqari / What is Taqari? → AI mock interview platform at https://www.taqari.com",
+      "What is Nayi Umeed? → Emotional support & counseling platform at https://nayiumeed.com",
+      "What security tools do you have? → SafeYourWeb at https://safeyourweb.vercel.app",
+      "Do you offer internships? → Code Achievers at https://codeachievers.com",
+      "Show me your portfolio → https://www.pixelai.dev/portfolio",
+      "What are your pricing plans? → https://www.pixelai.dev/pricing"
+    ]
+  },
+  {
+    "title": "How to Contact PixelAI / Get Started",
+    "description": "Users can reach PixelAI through the website contact form or by exploring services. The team responds quickly and offers a discovery call within 48 hours of alignment.",
+    "features": [
+      "Contact form: https://www.pixelai.dev (scroll to 'Get in Touch')",
+      "Services overview: https://www.pixelai.dev/#services",
+      "Pricing details: https://www.pixelai.dev/pricing",
+      "Portfolio: https://www.pixelai.dev/portfolio",
+      "Quick response time — dev starts within 48 hours"
+    ]
+  },
+  {
+    "title": "PixelAI Team & Mission",
+    "description": "PixelAI is led by passionate developers, designers, and AI engineers who believe in 'One Pixel at a Time' — delivering high-impact digital solutions for startups and businesses worldwide. The team specializes in Next.js, React, Python, Express.js, and AI integrations.",
+    "features": [
+      "Expert team in React, Next.js, Tailwind CSS, Python, Express.js",
+      "AI integrations: OpenAI, Google Gemini, Qdrant, Langchain",
+      "Motto: Designing tomorrow's interfaces, one pixel today",
+      "Long-term tech partnerships and equity collaboration options",
+      "Based in India, serving clients worldwide"
+    ]
   }
 ]
+

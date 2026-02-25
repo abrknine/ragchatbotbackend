@@ -10,13 +10,13 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const COLLECTION_NAME = 'pixelai-services';
 const EMBEDDING_DIM = 1536;
-const QDRANT_URL = 'https://bb9fbc81-0ff2-48dd-a79e-05363cb09f2d.us-west-1-0.aws.cloud.qdrant.io';
+const QDRANT_URL = 'https://e3a75eda-080b-48cb-9018-828cf742b479.eu-west-2-0.aws.cloud.qdrant.io:6333';
 
 router.post('/embed-and-upload', async (req, res) => {
   try {
     const filePath = path.join(__dirname, '../service.json');
     const services = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    console.log(services);
+   /// console.log(services);
 
     const points = await Promise.all(
       services.map(async (service, index) => {

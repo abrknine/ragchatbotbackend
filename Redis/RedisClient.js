@@ -1,11 +1,8 @@
 const { createClient } = require('redis');
 
 const redisClient = createClient({
-  username: 'default',
-  password: 'g4VG1ch4YawQqZgRsTXxRs8dKLXxhtvf',
+  url: process.env.REDIS_URL,
   socket: {
-    host: 'redis-12887.c89.us-east-1-3.ec2.redns.redis-cloud.com',
-    port: 12887,
     reconnectStrategy: (retries) => {
       const delay = Math.min(retries * 100, 5000);
       console.log(`Redis reconnect attempt ${retries}, retrying in ${delay}ms`);

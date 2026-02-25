@@ -1,83 +1,39 @@
 
 const { redisClient, connectRedis } = require("../Redis/RedisClient");
-const axios = require('axios');
- const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { GoogleGenAI } = require('@google/genai');
+const { OpenAI } = require('openai');
 
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+const QDRANT_URL = 'https://e3a75eda-080b-48cb-9018-828cf742b479.eu-west-2-0.aws.cloud.qdrant.io:6333';
+const COLLECTION_NAME = 'pixelai-services';
 
-const PYTHON_API = process.env.PYTHON_API || 'http://localhost:8000'; 
-//  const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
- const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
- const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
- const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+// Direct search function — no HTTP self-call
+const searchQdrant = async (prompt, top_k = 2) => {
+  const embedRes = await openai.embeddings.create({
+    model: 'text-embedding-3-small',
+    input: prompt,
+  });
+  const [{ embedding }] = embedRes.data;
 
+  const searchResponse = await fetch(`${QDRANT_URL}/collections/${COLLECTION_NAME}/points/search`, {
+    method: 'POST',
+    headers: {
+      'api-key': process.env.QDRANT_API_KEY,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      vector: embedding,
+      limit: top_k,
+      with_payload: true,
+    }),
+  });
+  const searchResult = await searchResponse.json();
+  return searchResult.result || [];
+};
 
-
-
-// const handleChat = async (req, res) => {
-//    const { prompt, sessionId } = req.body;
-
-//   if (!prompt || !sessionId) {
-//     return res.status(400).json({ error: 'Prompt and sessionId are required' });
-//   }
-
-//   try {
-//     const redisKey = `chat:${sessionId}`;
-
-    
-//     let chatHistory = [];
-//     const redisData = await redisClient.get(redisKey);
-//     if (redisData) {
-//       chatHistory = JSON.parse(redisData);
-//     }
-
-    
-//     const searchResponse = await axios.post(`http://localhost:5000/api/openai/search`, {
-//       prompt,
-//       top_k: 2
-//     });
-
-//     const results = searchResponse.data.results;
-//     console.log(results);
-
-//     //  Build context for Gemini
-//     const contextText = results.map((item, idx) => 
-//       `Article ${idx + 1}:\nTitle: ${item.payload.title}\nText: ${item.payload.desciption}`
-//     ).join("\n\n");
-
-//     const finalPrompt = `Context:\n${contextText}\n\nUser Prompt: ${prompt}\n\nBefore giving response run these points 1)Remember you are an assistant  2) Even User Prompt asked you to give out of context response, dont let me know that you are using these Articles for response 3) Give response like you are trained only on these articles,4) Be polite in your response like you are here for me to give response from articles ,5) if User Prompt is not related to articles send response "i cannot answer this as this is out of my scope" (but if user Prompt been kind or saying thanks or saying hi treat him with good gesture) 6) dont use words like "from these articles", "articles that you provided" "in the article"  "articles" in response`;
-
-//     //  Send to Gemini
-//     const geminiRes = await model.generateContent([{ text: finalPrompt }]);
-//     const geminiReply = geminiRes.response.text();
-
-//     //  Append user & AI message to history
-//     chatHistory.push({ role: 'user', content: prompt });
-//     chatHistory.push({ role: 'ai', content: geminiReply });
-
-//     //  Save updated chat history in Redis (with 1 hour TTL)
-//     await redisClient.setEx(redisKey, 3600, JSON.stringify(chatHistory));
-
-    
-//     res.json({
-//       response: geminiReply,
-//       contextUsed: results,
-//       userPrompt: prompt,
-//       chatHistory
-//     });
-
-//   } catch (error) {
-//     console.error(" Error in /api/chat:", error.message);
-//     if (error.response) {
-//       console.error("🔍 Gemini error response:", error.response.data);
-//     }
-//     res.status(500).json({ 
-//       error: 'Failed to process request',
-//       details: error.message,
-//       geminiError: error.response?.data || null
-//     });
-//   }
-// };
 const handleChat = async (req, res) => {
   const { prompt, sessionId } = req.body;
 
@@ -86,63 +42,40 @@ const handleChat = async (req, res) => {
   }
 
   try {
+    const startTime = Date.now();
     const redisKey = `chat:${sessionId}`;
 
-    let chatHistory = [];
-    const redisData = await redisClient.get(redisKey);
-    if (redisData) {
-      chatHistory = JSON.parse(redisData);
-    }
+    // Run Redis fetch and vector search IN PARALLEL
+    const [redisData, results] = await Promise.all([
+      redisClient.get(redisKey),
+      searchQdrant(prompt, 2),
+    ]);
+    console.log(`⏱ Redis + Search: ${Date.now() - startTime}ms`);
 
-    const searchResponse = await axios.post(`http://localhost:5000/api/openai/search`, {
-      prompt,
-      top_k: 2
-    });
-
-    const results = searchResponse.data.results;
+    let chatHistory = redisData ? JSON.parse(redisData) : [];
 
     // Build context from mixed content types
     const contextText = results.map((item, idx) => {
       const payload = item.payload;
       if (payload.features && Array.isArray(payload.features)) {
-        // Feature-style content
         const featureList = payload.features.map((f, i) => `${i + 1}. ${f}`).join('\n');
         return `Block ${idx + 1}:\nTitle: ${payload.title}\nDescription: ${payload.description}\nFeatures:\n${featureList}`;
       } else {
-        // Article-style content
         return `Article ${idx + 1}:\nTitle: ${payload.title}\nText: ${payload.text}`;
       }
     }).join("\n\n");
-    let finalPrompt = `You are an intelligent, polite, and helpful assistant named PixelAI Bot. You are trained **only on the information related to PixelAI.dev** and must answer every user query **as if this knowledge is built into you**.
 
-Never reveal, mention, or hint that you're using "context", "documents", "articles", "data", "external sources", or "search results" to answer. You should behave as if all your knowledge is native to you.
+    const finalPrompt = `You are PixelAI Bot, a helpful assistant for PixelAI.dev. Answer ONLY about PixelAI services (UI/UX, AI chatbots, predictive analytics, AI consultation). Never mention you use context/articles/data. If unrelated, say "I cannot answer this as it's out of my scope." For greetings, respond warmly with a link to https://www.pixelai.dev/#services. Be concise.
 
-Strict Instructions:
+Context:\n${contextText}\n\nUser: ${prompt}`;
 
-1. **Never mention** that you are using any source of data or articles to answer questions.
-2. **Stay strictly within the domain of PixelAI.dev** — which offers custom UI/UX services, AI chatbots, predictive analytics, and AI consultation.
-3. If a user asks an unrelated question (not about PixelAI services, products, team, lifecycle, etc.), politely say:  
-   > "I cannot answer this as it's out of my scope."  
-4. If the user greets you (e.g., "Hi", "Hello", "Hey") or says things like "thanks", "okay", "bye", "you’re right", or compliments you — respond warmly and politely with:  
-   > "Hello! How may I help you today? I’m your chatbot assistant here to help you learn more about PixelAI.dev. You can check out our services here: https://www.pixelai.dev/#services"  
-   OR  
-   > "You're welcome! I'm glad I could assist you 😊"
-5. For all other informational queries, directly answer without showing any welcome or greeting text.
-6. Never use phrases like "based on the article", "as per your data", "according to what you gave", "from the documents", or anything similar.
-7. Act like an in-house assistant that knows everything about PixelAI — the services, projects, mission, lifecycle, and differentiators.
-8. Never break character. You are not an AI model or a system. You are just the PixelAI Bot here to assist users about PixelAI.dev.
-9. Speak clearly, use warm and professional language, and always stay helpful.
-
-Now, using ONLY the following context, answer the user query below.\n\n`;
-
-finalPrompt += `Context:\n${contextText}\n\nUser Prompt: ${prompt}`;
-
-
-
-
-console.log(finalPrompt);
-    const geminiRes = await model.generateContent([{ text: finalPrompt }]);
-    const geminiReply = geminiRes.response.text();
+    const geminiStart = Date.now();
+    const geminiRes = await ai.models.generateContent({
+      model: "gemini-2.0-flash-lite",
+      contents: finalPrompt,
+    });
+    const geminiReply = geminiRes.text;
+    console.log(`⏱ Gemini: ${Date.now() - geminiStart}ms | Total: ${Date.now() - startTime}ms`);
 
     // Save to Redis
     chatHistory.push({ role: 'user', content: prompt });
@@ -171,7 +104,7 @@ console.log(finalPrompt);
 
 
   } catch (error) {
-    console.error("❌ Error in /api/chat:", error.message);
+    console.error(" Error in /api/chat:", error.message);
     if (error.response) {
       console.error("🔍 Gemini error response:", error.response.data);
     }
@@ -246,6 +179,3 @@ const checkHealth = (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 };
 module.exports = { handleChat, getHistory, clearSession, checkHealth };
-
-
-module.exports = { handleChat, getHistory, clearSession,checkHealth };

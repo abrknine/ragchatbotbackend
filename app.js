@@ -1,6 +1,5 @@
  require('dotenv').config();
  const express = require('express');
- const mongoose = require('mongoose');
  const cors = require('cors');
  const { redisClient, connectRedis } = require("./Redis/RedisClient");
  const routes = require('./routes/ChatRoute');
@@ -9,18 +8,6 @@ const openaiEmbedRoutes = require('./routes/openaiEmbed');
 
  const app = express();
  const port = process.env.PORT || 5000;
- const mongoURI = process.env.MONGODB_URI;
- 
-
- 
-
- // Connect to MongoDB
- mongoose.connect(mongoURI)
-   .then(() => console.log(' Connected to MongoDB'))
-   .catch(err => {
-     console.error(' MongoDB connection error:', err.message);
-     process.exit(1);
-   });
 
 
 
@@ -40,7 +27,7 @@ const openaiEmbedRoutes = require('./routes/openaiEmbed');
 
 
 app.use(cors({
-  origin:[ 'http://localhost:3000','https://www.pixelai.dev'],  // Replace with your frontend URL
+  origin:[ 'http://localhost:3000','http://localhost:3001','https://www.pixelai.dev'],  // Replace with your frontend URL
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
