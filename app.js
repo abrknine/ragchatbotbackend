@@ -16,7 +16,7 @@ const openaiEmbedRoutes = require('./routes/openaiEmbed');
    await connectRedis();
    await redisClient.set('bar', 'foo');// Connect Redis ONE TIME at app start
     const value = await redisClient.get('bar');
-    console.log(value);
+    // console.log(value);
  })(); 
 
  // Middleware
@@ -52,7 +52,7 @@ app.use((req, res) => {
 
  // Start Server
  app.listen(port, () => {
-   console.log(`Server running on port ${port}`);
+   // console.log(`Server running on port ${port}`);
  });
 
 

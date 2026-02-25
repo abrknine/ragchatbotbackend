@@ -5,7 +5,7 @@ const redisClient = createClient({
   socket: {
     reconnectStrategy: (retries) => {
       const delay = Math.min(retries * 100, 5000);
-      console.log(`Redis reconnect attempt ${retries}, retrying in ${delay}ms`);
+      // console.log(`Redis reconnect attempt ${retries}, retrying in ${delay}ms`);
       return delay;
     },
   },

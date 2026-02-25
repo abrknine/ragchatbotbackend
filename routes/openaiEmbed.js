@@ -10,7 +10,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const COLLECTION_NAME = 'pixelai-services';
 const EMBEDDING_DIM = 1536;
-const QDRANT_URL = 'https://e3a75eda-080b-48cb-9018-828cf742b479.eu-west-2-0.aws.cloud.qdrant.io:6333';
+const QDRANT_URL = process.env.QDRANT_URL;
 
 router.post('/embed-and-upload', async (req, res) => {
   try {
@@ -74,7 +74,7 @@ router.post('/embed-and-upload', async (req, res) => {
 
     res.json({ success: true, message: 'Services embedded and uploaded to Qdrant successfully.', uploadResult });
   } catch (error) {
-    console.error('❌ Error in /embed-and-upload:', error.message);
+    // console.error('❌ Error in /embed-and-upload:', error.message);
     res.status(500).json({ error: 'Failed to embed and upload services.', details: error.message });
   }
 });
@@ -112,7 +112,7 @@ router.post('/search', async (req, res) => {
 
     res.json({ results: searchResult.result || [] });
   } catch (error) {
-    console.error('❌ Error in /search:', error.message);
+    // console.error('❌ Error in /search:', error.message);
     res.status(500).json({ error: 'Failed to search in Qdrant', details: error.message });
   }
 });

@@ -1,13 +1,10 @@
 
 const { redisClient, connectRedis } = require("../Redis/RedisClient");
-const { GoogleGenAI } = require('@google/genai');
 const { OpenAI } = require('openai');
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-const QDRANT_URL = 'https://e3a75eda-080b-48cb-9018-828cf742b479.eu-west-2-0.aws.cloud.qdrant.io:6333';
+const QDRANT_URL = process.env.QDRANT_URL;
 const COLLECTION_NAME = 'pixelai-services';
 
 // Direct search function — no HTTP self-call
@@ -50,7 +47,7 @@ const handleChat = async (req, res) => {
       redisClient.get(redisKey),
       searchQdrant(prompt, 2),
     ]);
-    console.log(`⏱ Redis + Search: ${Date.now() - startTime}ms`);
+    // console.log(`⏱ Redis + Search: ${Date.now() - startTime}ms`);
 
     let chatHistory = redisData ? JSON.parse(redisData) : [];
 
@@ -65,48 +62,51 @@ const handleChat = async (req, res) => {
       }
     }).join("\n\n");
 
-    const finalPrompt = `You are PixelAI Bot, a helpful assistant for PixelAI.dev. Answer ONLY about PixelAI services (UI/UX, AI chatbots, predictive analytics, AI consultation). Never mention you use context/articles/data. If unrelated, say "I cannot answer this as it's out of my scope." For greetings, respond warmly with a link to https://www.pixelai.dev/#services. Be concise.
+    const systemPrompt = `You are PixelAI Bot, a helpful assistant for PixelAI.dev. Answer ONLY about PixelAI services (UI/UX, AI chatbots, predictive analytics, AI consultation). Never mention you use context/articles/data. If unrelated, say "I cannot answer this as it's out of my scope." For greetings, respond warmly with a link to https://www.pixelai.dev/#services. Be concise.`;
 
-Context:\n${contextText}\n\nUser: ${prompt}`;
+    // Set SSE headers for streaming
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders();
 
     const geminiStart = Date.now();
-    const geminiRes = await ai.models.generateContent({
-      model: "gemini-2.0-flash-lite",
-      contents: finalPrompt,
+    const stream = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: `Context:\n${contextText}\n\nUser: ${prompt}` }
+      ],
+      max_tokens: 250,
+      temperature: 0,
+      stream: true,  // <-- THIS enables streaming
     });
-    const geminiReply = geminiRes.text;
-    console.log(`⏱ Gemini: ${Date.now() - geminiStart}ms | Total: ${Date.now() - startTime}ms`);
 
-    // Save to Redis
+    // Stream each chunk to the frontend as SSE
+    let fullReply = '';
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content || '';
+      if (content) {
+        fullReply += content;
+        // Send each word/token as an SSE event
+        res.write(`data: ${JSON.stringify({ content })}\n\n`);
+      }
+    }
+    // console.log(`⏱ OpenAI: ${Date.now() - geminiStart}ms | Total: ${Date.now() - startTime}ms`);
+
+    // Save complete response to Redis AFTER streaming finishes
     chatHistory.push({ role: 'user', content: prompt });
-    chatHistory.push({ role: 'ai', content: geminiReply });
+    chatHistory.push({ role: 'ai', content: fullReply });
     await redisClient.setEx(redisKey, 3600, JSON.stringify(chatHistory));
 
-    // Build cleaned context for frontend (structured response)
-    const contextUsed = results.map((item) => {
-      const { title, description, text, features, url } = item.payload;
-      return {
-        title,
-        description: description || null,
-        text: text || null,
-        features: features || null,
-        url: url || null
-      };
-    });
-
-    res.json({
-  response: geminiReply,
-  contextUsed: results, // Already structured!
-  structuredContext: results, // You can reuse this if needed in frontend
-  userPrompt: prompt,
-  chatHistory
-});
-
+    // Signal end of stream
+    res.write(`data: [DONE]\n\n`);
+    res.end();
 
   } catch (error) {
-    console.error(" Error in /api/chat:", error.message);
+    // console.error(" Error in /api/chat:", error.message);
     if (error.response) {
-      console.error("🔍 Gemini error response:", error.response.data);
+      // console.error("🔍 Gemini error response:", error.response.data);
     }
     res.status(500).json({
       error: 'Failed to process request',
@@ -145,7 +145,7 @@ const getHistory = async (req, res) => {
     });
     
   } catch (error) {
-    console.error(" Error retrieving chat history:", error.message);
+    // console.error(" Error retrieving chat history:", error.message);
     res.status(500).json({
       error: 'Failed to retrieve chat history',
       details: error.message
@@ -164,11 +164,11 @@ const clearSession = async (req, res) => {
   try {
     const redisKey = `chat:${sessionId}`;
     await redisClient.del(redisKey);
-    console.log(`🧹 Cleared Redis session: ${redisKey}`);
+    // console.log(`🧹 Cleared Redis session: ${redisKey}`);
 
     res.json({ success: true, message: 'Session cleared successfully.' });
   } catch (error) {
-    console.error(' Error clearing session:', error.message);
+    // console.error(' Error clearing session:', error.message);
     res.status(500).json({ error: 'Failed to clear session' });
   }
 
